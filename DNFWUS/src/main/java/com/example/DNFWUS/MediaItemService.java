@@ -1,5 +1,6 @@
 package com.example.DNFWUS;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class MediaItemService {
     // --- Методы бизнес-логики (наш CRUD) ---
 
     // CREATE (Создание)
+    @Transactional
     public  MediaItem createItem (MediaItem item) {
         // Мы просто передаем "книгу" "библиотекарю", что бы он ее сохранил.
         return repository.save(item);
@@ -44,6 +46,7 @@ public class MediaItemService {
     }
 
     // UPDATE (Обновление)
+    @Transactional
     public MediaItem updateItem (Long id, MediaItem itemDetails) {
         // 1. Находим существующий объект
         MediaItem existingItem = getItemById(id); // Мы используем наш же метод!
@@ -60,6 +63,7 @@ public class MediaItemService {
     }
 
     // DELETE (Удаление)
+    @Transactional
     public void deleteItem (Long id) {
         // 1. Проверяем, существует ли запись, что бы не получить ошибку
         if (!repository.existsById(id)) {

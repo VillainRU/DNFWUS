@@ -1,5 +1,6 @@
 package com.example.DNFWUS;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,7 @@ public class MediaItemController {
     // CREATE (Создание)
     // 5. Обрабатывает HTTP POST запросы на /api/media
     @PostMapping
-    public MediaItemDto createItem(@RequestBody MediaItemDto dto) {
+    public MediaItemDto createItem(@Valid @RequestBody MediaItemDto dto) {
         // 6. @RequestBody берет JSON из тела запроса и превращается его в объект MediaItem
         // 1. DTO -> Entity
         MediaItem entity = mapper.toEntity(dto);
@@ -59,7 +60,7 @@ public class MediaItemController {
     // UPDATE (Обновление)
     // Обрабатывает PUT запросы на /api/media/1
     @PutMapping("/{id}")
-    public MediaItemDto updateItem (@PathVariable Long id, @RequestBody MediaItemDto dto) {
+    public MediaItemDto updateItem (@PathVariable Long id, @Valid @RequestBody MediaItemDto dto) {
         // Мы передаем и ID и URL, и JSON из тела запроса в наш сервис.
         // Превращаем входящий JSON в сущность
         MediaItem entityDetails = mapper.toEntity(dto);

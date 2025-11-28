@@ -1,11 +1,10 @@
 package com.example.DNFWUS;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // 1. Говорим Spring, что это Контроллер для REST API.
 // Он будет принимать HTTP-запросы и возвращать JSON.
@@ -16,6 +15,7 @@ public class MediaItemController {
 
     // 3. Нам нужен "мозг", поэтому мы просим его у Spring.
     private final MediaItemService mediaService;
+    private final MediaItemMapper mapper;
 
     // 4. Spring "внедряет" (inject) сервис через конструктор.
 
@@ -25,33 +25,50 @@ public class MediaItemController {
     // CREATE (Создание)
     // 5. Обрабатывает HTTP POST запросы на /api/media
     @PostMapping
-    public MediaItem createItem(@RequestBody MediaItem item) {
+    public MediaItemDto createItem(@RequestBody MediaItemDto dto) {
         // 6. @RequestBody берет JSON из тела запроса и превращается его в объект MediaItem
-        return mediaService.createItem(item);
+        // 1. DTO -> Entity
+        MediaItem entity = mapper.toEntity(dto);
+
+        // 2. Вызываем сервис
+        MediaItem createdEntity = mediaService.createItem(entity);
+
+        // 3. Entity -> DTO
+        return mapper.toDto(createdEntity);
     }
 
-    // READ (Получение всех)
+    // READ ALL (Получение всех)
     // 7. Обрабатывает HTTP GET запросы на /api/media
     @GetMapping
-    public List<MediaItem> getAllItems() {
-        return mediaService.getAllItems();
+    public List<MediaItemDto> getAllItems() {
+        return mediaService.getAllItems().stream()
+                .map(mapper::toDto)
+                .collect(Collectors.toList());
     }
 
     // READ (Получение одного по ID)
     // Обрабатывает GET запросы на /api/media/1, /api/media/2 и т.д.
     @GetMapping("/{id}")
-    public MediaItem getItemById (@PathVariable Long id) {
+    public MediaItemDto getItemById (@PathVariable Long id) {
         // 1. @PathVariable берет "id" из URL (например, "1")
         // и передает его в метод.
-        return mediaService.getItemById(id);
+        MediaItem entity = mediaService.getItemById(id);
+        return mapper.toDto(entity);
     }
 
     // UPDATE (Обновление)
     // Обрабатывает PUT запросы на /api/media/1
     @PutMapping("/{id}")
-    public MediaItem updateItem (@PathVariable Long id, @RequestBody MediaItem itemDetails) {
+    public MediaItemDto updateItem (@PathVariable Long id, @RequestBody MediaItemDto dto) {
         // Мы передаем и ID и URL, и JSON из тела запроса в наш сервис.
-        return mediaService.updateItem(id, itemDetails);
+        // Превращаем входящий JSON в сущность
+        MediaItem entityDetails = mapper.toEntity(dto);
+
+        // Обновляем
+        MediaItem updatedEntity = mediaService.updateItem(id, entityDetails);
+
+        // Возвращаем DTO
+        return mapper.toDto(updatedEntity);
     }
 
     // DELETE (Удаление)

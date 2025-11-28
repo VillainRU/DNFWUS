@@ -41,7 +41,7 @@ public class MediaItemService {
         // .orElseThrow() - это элегантный способ вернуть ошибку,
         // если "книга" с таким ID не найдена.
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Item not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
     }
 
     // UPDATE (Обновление)
@@ -66,7 +66,7 @@ public class MediaItemService {
     public void deleteItem (Long id) {
         // 1. Проверяем, существует ли запись, что бы не получить ошибку
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Item not found with id: " + id);
+            throw new ResourceNotFoundException("Item not found with id: " + id);
         }
         // 2. Удаляем
         repository.deleteById(id);

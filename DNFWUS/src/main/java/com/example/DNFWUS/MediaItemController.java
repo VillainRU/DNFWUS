@@ -1,5 +1,6 @@
 package com.example.DNFWUS;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,17 +10,15 @@ import java.util.List;
 // 1. Говорим Spring, что это Контроллер для REST API.
 // Он будет принимать HTTP-запросы и возвращать JSON.
 @RestController
-@RequestMapping("/api/media") // 2. Базовый URL для всех методов в этом классе
+@RequestMapping("/api/media")
+@RequiredArgsConstructor// 2. Базовый URL для всех методов в этом классе
 public class MediaItemController {
 
     // 3. Нам нужен "мозг", поэтому мы просим его у Spring.
     private final MediaItemService mediaService;
 
     // 4. Spring "внедряет" (inject) сервис через конструктор.
-    @Autowired
-    public MediaItemController (MediaItemService mediaService) {
-        this.mediaService = mediaService;
-    }
+
 
     // --- Эндпоинты (Endpoints) ---
 

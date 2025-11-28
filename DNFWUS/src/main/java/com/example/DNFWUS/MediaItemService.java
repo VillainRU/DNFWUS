@@ -1,6 +1,7 @@
 package com.example.DNFWUS;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,8 @@ import java.util.List;
 
 // 1. Говорим Spring, что это "Сервис - компонент с бизнес-логикой.
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class MediaItemService {
 
     // 2. Нам нужен "библиотекарь", поэтому мы просим его у Spring.
@@ -16,10 +19,6 @@ public class MediaItemService {
 
     // 3. Spring "внедряет" (inject) репозиторий через конструктор.
     // Это и есть Dependency Injection.
-    @Autowired
-    public MediaItemService (MediaItemRepository repository) {
-        this.repository = repository;
-    }
 
     // --- Методы бизнес-логики (наш CRUD) ---
 

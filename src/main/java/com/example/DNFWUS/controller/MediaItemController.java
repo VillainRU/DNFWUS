@@ -1,5 +1,9 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.controller;
 
+import com.example.DNFWUS.entity.MediaItem;
+import com.example.DNFWUS.dto.MediaItemDto;
+import com.example.DNFWUS.mapper.MediaItemMapper;
+import com.example.DNFWUS.service.MediaItemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

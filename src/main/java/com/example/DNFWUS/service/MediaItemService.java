@@ -1,11 +1,12 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.service;
 
+import com.example.DNFWUS.entity.MediaItem;
+import com.example.DNFWUS.exception.ResourceNotFoundException;
+import com.example.DNFWUS.repository.MediaItemRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.print.attribute.standard.Media;
 import java.util.List;
 
 // 1. Говорим Spring, что это "Сервис - компонент с бизнес-логикой.
@@ -24,7 +25,7 @@ public class MediaItemService {
 
     // CREATE (Создание)
     @Transactional
-    public  MediaItem createItem (MediaItem item) {
+    public MediaItem createItem (MediaItem item) {
         // Мы просто передаем "книгу" "библиотекарю", что бы он ее сохранил.
         return repository.save(item);
     }

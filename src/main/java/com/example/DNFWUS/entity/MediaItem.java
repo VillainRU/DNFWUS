@@ -1,5 +1,7 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.entity;
 
+import com.example.DNFWUS.enums.MediaCategory;
+import com.example.DNFWUS.enums.WatchStatus;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.enums;
 
 public enum WatchStatus {
     VIEWED,

@@ -1,9 +1,12 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.mapper;
 
-import com.example.DNFWUS.MediaItem;
-import com.example.DNFWUS.MediaItemDto;
+import com.example.DNFWUS.dto.MediaItemDto;
+import com.example.DNFWUS.entity.MediaItem;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingConstants;
 import org.springframework.stereotype.Component;
 
+/*
 @Component // Делаем его бином, чтобы можно было внедрить в Контроллер
 public class MediaItemMapper {
 
@@ -30,4 +33,13 @@ public class MediaItemMapper {
         entity.setStatus(dto.getStatus());
         return entity;
     }
+}*/
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface MediaItemMapper {
+
+    // Entity -> DTO
+    MediaItemDto toDto(MediaItem entity);
+
+    // DTO -> Entity
+    MediaItem toEntity(MediaItemDto dto);
 }

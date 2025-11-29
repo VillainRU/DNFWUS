@@ -1,6 +1,5 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.exception;
 
-import com.example.DNFWUS.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

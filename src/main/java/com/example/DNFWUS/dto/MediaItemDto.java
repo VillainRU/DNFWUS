@@ -1,7 +1,7 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.dto;
 
-import com.example.DNFWUS.MediaCategory;
-import com.example.DNFWUS.WatchStatus;
+import com.example.DNFWUS.enums.MediaCategory;
+import com.example.DNFWUS.enums.WatchStatus;
 import lombok.Data; // Генерирует Геттеры, Сеттеры, toString и т.д.
 import jakarta.validation.constraints.NotBlank; // Важный импорт
 import jakarta.validation.constraints.NotNull;

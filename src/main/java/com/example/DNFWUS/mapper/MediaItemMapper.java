@@ -1,7 +1,7 @@
-package com.example.DNFWUS;
+package com.example.DNFWUS.mapper;
 
-import com.example.DNFWUS.MediaItem;
-import com.example.DNFWUS.MediaItemDto;
+import com.example.DNFWUS.dto.MediaItemDto;
+import com.example.DNFWUS.entity.MediaItem;
 import org.springframework.stereotype.Component;
 
 @Component // Делаем его бином, чтобы можно было внедрить в Контроллер

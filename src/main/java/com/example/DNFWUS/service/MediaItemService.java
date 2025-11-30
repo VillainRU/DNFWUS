@@ -5,6 +5,7 @@ import com.example.DNFWUS.exception.ResourceNotFoundException;
 import com.example.DNFWUS.repository.MediaItemRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class MediaItemService {
 
     // 2. Нам нужен "библиотекарь", поэтому мы просим его у Spring.
@@ -27,12 +29,14 @@ public class MediaItemService {
     @Transactional
     public MediaItem createItem (MediaItem item) {
         // Мы просто передаем "книгу" "библиотекарю", что бы он ее сохранил.
+        log.info("Creating new media item: {}", item.getTitle());
         return repository.save(item);
     }
 
     // READ (Получение всех)
     public List<MediaItem> getAllItems() {
         // Просим у "библиотекаря" все "книги".
+        log.info("Requesting all items");
         return repository.findAll();
     }
 
@@ -41,6 +45,7 @@ public class MediaItemService {
         // findById возвращает "Optional", который может быть пустым.
         // .orElseThrow() - это элегантный способ вернуть ошибку,
         // если "книга" с таким ID не найдена.
+        log.info("Searching for item with id: {}", id);
         return repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Item not found with id: " + id));
     }
@@ -66,6 +71,7 @@ public class MediaItemService {
     @Transactional
     public void deleteItem (Long id) {
         // 1. Проверяем, существует ли запись, что бы не получить ошибку
+        log.info("Deleting item with id: {}", id);
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException("Item not found with id: " + id);
         }

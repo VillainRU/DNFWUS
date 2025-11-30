@@ -1,6 +1,7 @@
 package com.example.DNFWUS.service;
 
 import com.example.DNFWUS.entity.MediaItem;
+import com.example.DNFWUS.exception.ResourceNotFoundException;
 import com.example.DNFWUS.repository.MediaItemRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.print.attribute.standard.Media;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -51,5 +53,24 @@ public class MediaItemServiceTest {
 
         // Проверяем, что сервис действительно вызывал репозиторий
         verify(repository).save(any(MediaItem.class));
+    }
+
+    @Test
+    void getItemById_WhenNotFound_ShouldThrowException() {
+        // --- ARRANGE (Подготовка) ---
+        Long nonExistendId = 999L;
+
+        // Учим дублера: "Если спросят ID 999, верни ПУСТОТУ (Optional.empty)"
+        when(repository.findById(nonExistendId)).thenReturn(Optional.empty());
+
+        // --- ACT & ASSERT (Действие и Проверка) ---
+        // Мы используем assertThrows. Он говорит:
+        // "Я ожидаю, что следующий код взорвется с ошибкой ResourceNotFoundException.
+        // Если код выполнится без ошибок - тест провален!"
+        assertThrows(ResourceNotFoundException.class, () -> service.getItemById(nonExistendId));
+
+        // Убеждаемся, что сервис действительно пытался искать
+        verify(repository).findById(nonExistendId);
+
     }
 }

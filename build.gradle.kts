@@ -21,7 +21,7 @@ repositories {
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	runtimeOnly("com.h2database:h2")
+	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     compileOnly("org.projectlombok:lombok")
@@ -30,6 +30,7 @@ dependencies {
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:0.2.0")
+    implementation("org.telegram:telegrambots-spring-boot-starter:6.5.0")
 }
 
 tasks.withType<Test> {
